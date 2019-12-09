@@ -1,0 +1,66 @@
+    <div class="footer pc-block">
+        <a href="aboutus">关于我们</a>
+        <a href="/product">雅龑茶苑</a>
+        <a href="contactus">联系我们</a>
+        <a href="/">法律声明</a>
+        <a href="/">线上商店</a>
+        <a href="#" class="wx" >微信公众号<img class="weixin" src="/images/wei.jpg" alt=""></a>
+	    <a style="float: right;line-height: 24px;display: flex;height: 20px;align-items: center;font-size: 12px;margin-top: 27px;"><img src="/images/gongan.png">粤ICP备19148294号</a>
+    </div>
+    <div class="footer mini-block">
+        <a href="/">线上商店</a>
+        <a href="#" class="mini-wx">微信公众号</a>
+        <a href="/contactus">联系我们</a>
+    </div>
+</div>
+<div class="wx-mask" style="display: none;"><img src="/images/wei.jpg" alt=""></div>
+<script src="/js/zepto.min.js"></script>
+	<script src="/js/swiper-3.42.min.js"></script>
+	<script>
+		var mySwiper = new Swiper('.swiper-container',{
+            autoplay: 6000,
+            autoplayStopOnLast: false,
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+        	nextButton: '.swiper-button-next',
+        	prevButton: '.swiper-button-prev',
+            autoplayDisableOnInteraction : false,
+            onSlideChangeStart: function(e,){
+                $(".rightinfo").css({opacity:0,'z-index':0})
+            },
+            onSlideChangeEnd: function(e){
+                $(".rightinfo").eq(e.activeIndex).css({opacity:1,'z-index':10})
+            }
+        });   
+
+        $(".mini-menu-btn").click(function(){
+            $(".mask").toggle()
+            $(".menus").toggle()
+        })
+        $(".mini-pro").click(function(){
+            $(".sec-prod").toggle()
+        })
+        $(".mask").click(function(){
+            $(this).hide()
+            $('.menus').hide()
+        })
+        $(".mini-wx").on("click", function(){
+            $(".wx-mask").show();
+        })
+        $(".wx-mask").on("click",function(e){
+            if(e.target.tagName != "IMG"){
+                $(".wx-mask").hide()
+            }
+        })
+
+        $(".btn-link").on('click tap touchstart',function(){
+            console.log(333)
+            $(this).css({color:"#fff",background:"#c78d27"})
+		var _this = $(this)
+	    setTimeout(function(){
+                location.href = _this.attr('_href') ||  '/'
+            },200)
+        })
+	</script>
+</body>
+</html>
