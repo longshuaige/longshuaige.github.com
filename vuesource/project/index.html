@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <a href="#">{{name}}</a>
+        <b>{{enfn}}</b>
+    </div>
+    <script src="vue/dist/vue.js"></script>
+    <script>
+        // Vue.mixin({
+        //     beforeCreate(){
+        //         console.log("mixin beforeCreate")
+        //     }
+        // })
+
+        var app = new Vue({
+            el: '#app',
+            beforeCreate(){
+            },
+            data(){
+                var obj = {
+                    name: "longlonga",
+                    age: 123
+                }
+                Object.defineProperty(obj,'enfn',{
+                    enumerable:false,
+                    value:"gg"
+                })
+                return obj
+            },
+            methods:{
+                
+            },
+            mounted(){
+                console.log(this.enfn,this._data)
+            }
+        })
+    </script>
+</body>
+</html>
