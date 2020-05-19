@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">{{x.d}}</div>
+    <script src="../vue/dist/vue.js"></script>
+    <script src="../vuex-dev/dist/vuex.js"></script>
+    <script>
+        Vue.use(Vuex)
+        const store = new Vuex.Store({
+            state: {
+                data: [],
+                count: 0
+            },
+            getters: {
+                // 需要根据state派生一些其它数据
+                dataLen: state => {
+                    return state.data.length
+                }
+            },
+            mutations: {
+                increment(state, actionArg) {
+                    state.count++
+                }
+            },
+            actions: {
+                doIncrement(context) {
+                    context.commit('increment', 'from action arg')
+                }
+            }
+        })
+        var app = new Vue({
+            el: "#app",
+            store,
+            data(){
+                return {
+                    x:{}
+                }
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.x={d:123}
+                }, 500);
+                this.$store.dispatch("doIncrement", 'payloadArg')
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+</html>

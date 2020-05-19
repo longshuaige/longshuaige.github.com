@@ -37,15 +37,17 @@ const sharedPropertyDefinition = {
 
 export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter () {
+    // 因为是同一个引用，所以访问 vm.data时，便会进入这，然后触发之前在 defineReactive 中，设定好的响应式  get函数
     return this[sourceKey][key]
   }
   sharedPropertyDefinition.set = function proxySetter (val) {
     this[sourceKey][key] = val
   }
-  Object.defineProperty(target, key, sharedPropertyDefinition)
+  Object.defineProperty(target, key, sharedPropertyDefinition) // 将data return的数据，关联到vm下
 }
 
 export function initState (vm: Component) {
+  // props 、methods 、data 、watch
   vm._watchers = []
   const opts = vm.$options
   if (opts.props) initProps(vm, opts.props)
@@ -144,18 +146,18 @@ function initData (vm: Component) {
         vm
       )
     } else if (!isReserved(key)) {
-      proxy(vm, `_data`, key)
+      proxy(vm, `_data`, key) // 1.使得vm能够直接访问data中的属性，2. 通过 vm更改data中的属性值时，会同步到 vm._data 以及 vm.$option.data
     }
   }
   // observe data
-  observe(data, true /* asRootData */)
+  observe(data, true /* asRootData */) // 使得data有了__ob__属性，指向一个observer
 }
 
 export function getData (data: Function, vm: Component): any {
   // #7573 disable dep collection when invoking data getters
   pushTarget()
   try {
-    return data.call(vm, vm)
+    return data.call(vm, vm) // 所以data函数中可以用this， 但是还不能访问data函数return的数据
   } catch (e) {
     handleError(e, vm, `data()`)
     return {}

@@ -166,7 +166,7 @@ export function mountComponent (
   }
   callHook(vm, 'beforeMount')
 
-  let updateComponent
+  let updateComponent // 侦听到变化后，触发的函数
   /* istanbul ignore if */
   if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
     updateComponent = () => {
@@ -194,6 +194,7 @@ export function mountComponent (
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
+  // 使得 1.实例vm有了_watcher,指向一个watcher；2.watcher的vm属性也指向该实例；3实例vm拥有了watchers属性
   new Watcher(vm, updateComponent, noop, {
     before () {
       if (vm._isMounted && !vm._isDestroyed) {

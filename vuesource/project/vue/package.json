@@ -146,5 +146,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "vuex": "^3.4.0"
   }
 }

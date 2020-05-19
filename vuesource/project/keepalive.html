@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+
+        </div>
+    </div>
+    <script src="vue/dist/vue.js"></script>
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            data(){
+                return {
+                    arr: [{d:1}],
+                    arr2: [],
+                    obj:{}
+                }
+            },
+            watch:{
+                arr: {
+                    handler:(v)=>{
+                        console.log(this)
+                        console.log('changed', v)
+                    },
+                    immediate:true
+                },
+                arr2:()=>{
+                    // 箭头函数，this直接指向window
+                    console.log(this)
+                }
+            },
+            created(){
+
+            },
+            beforeMount(){
+            },
+            beforeUpdate(){
+            },
+            mounted(){
+                setTimeout(()=>{
+                    this.arr[0].d = 4
+                    // this.arr[0] = {d:5} 这种对数组成员直接赋值的方式，会导致该项丢失__ob__属性，从而失去响应式
+                    // this.arr.push({d:6})
+                  //  this.arr2.push(4)
+                  this.$set(this.obj,"x",'xxx')
+                },400)
+            }
+        })
+    </script>
+</body>
+</html>

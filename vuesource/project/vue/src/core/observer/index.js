@@ -41,10 +41,10 @@ export class Observer {
 
   constructor (value: any) {
     this.value = value
-    this.dep = new Dep()
+    this.dep = new Dep() // 如果数据的子项是对象，也需要收集其依赖，却没有通过闭包保存，而是保存在observer中
     this.vmCount = 0
     def(value, '__ob__', this)
-    if (Array.isArray(value)) {
+    if (Array.isArray(value)) { // 重写私有原型
       if (hasProto) {
         protoAugment(value, arrayMethods)
       } else {
@@ -153,16 +153,16 @@ export function defineReactive (
     val = obj[key]
   }
 
-  let childOb = !shallow && observe(val)
+  let childOb = !shallow && observe(val) // val 上有__ob__指向observe, 每个observe都有自己的dep
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
-        dep.depend()
+        dep.depend() // watcher 添加依赖dep
         if (childOb) {
-          childOb.dep.depend()
+          childOb.dep.depend() // new Observer的时候，添加了一个dep属性
           if (Array.isArray(value)) {
             dependArray(value)
           }
@@ -187,7 +187,7 @@ export function defineReactive (
       } else {
         val = newVal
       }
-      childOb = !shallow && observe(newVal)
+      childOb = !shallow && observe(newVal) // 新的值需要监控
       dep.notify()
     }
   })

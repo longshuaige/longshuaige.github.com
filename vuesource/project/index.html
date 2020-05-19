@@ -8,8 +8,12 @@
 </head>
 <body>
     <div id="app">
-        <a href="#">{{name}}</a>
-        <b>{{enfn}}</b>
+        <!-- <a href="#">{{name}}</a> -->
+        <span>{{obj.val}}</span>
+        <div>
+            <h3 v-for="item in list">{{item}}</h3>
+            <span>{{listObj[0].x}}</span>
+        </div>
     </div>
     <script src="vue/dist/vue.js"></script>
     <script>
@@ -24,21 +28,26 @@
             beforeCreate(){
             },
             data(){
-                var obj = {
+                return {
                     name: "longlonga",
-                    age: 123
+                    obj: {
+                        val: 654
+                    },
+                    list: [1,2,3],
+                    listObj: [{x:3}]
                 }
-                Object.defineProperty(obj,'enfn',{
-                    enumerable:false,
-                    value:"gg"
-                })
-                return obj
             },
-            methods:{
-                
+            created(){
+            },
+            beforeMount(){
+            },
+            beforeUpdate(){
             },
             mounted(){
-                console.log(this.enfn,this._data)
+                console.log(this.listObj)
+                setTimeout(()=>{
+                    this.obj = {val:789}
+                },1000)
             }
         })
     </script>

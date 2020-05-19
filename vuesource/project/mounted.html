@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>{{age}}</h2>
+            <child-eve></child-eve>
+        </div>
+    </div>
+    <script src="vue/dist/vue.js"></script>
+    <script>
+
+        Vue.component("ChildEve",{
+            name:"ChildEve",
+            data(){
+                return {
+                    obj:{x:1}
+                }
+            },
+            template:`
+                <h3>{{obj.x}}</h3>
+            `,
+            beforeCreate(){
+                console.log("child beforeCreate", this)
+            },
+            created(){
+                console.log("child created", this)
+            },
+            beforeMount(){
+                // beforeMount 之后才会遇到子组件
+                console.log('child beforeMount', this)
+            },
+            mounted(){
+                // 父子组件页面元素都渲染好了，但是，父组件的 _isMounted = false
+                console.log('child mounted', this)
+            }
+        })
+        var app = new Vue({
+            el: '#app',
+            beforeCreate(){
+                console.log("parent beforeCreate", this)
+            },
+            data(){
+                return {
+                    age:14
+                }
+            },
+            created(){
+                console.log("parent created", this)
+            },
+            methods:{
+
+            },
+            beforeMount(){
+                console.log('parent beforeMount', this)
+            },
+            beforeUpdate(){
+            },
+            mounted(){
+                console.log('parent mounted', this)
+            }
+        })
+    </script>
+</body>
+</html>

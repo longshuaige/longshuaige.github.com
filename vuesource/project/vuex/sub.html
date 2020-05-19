@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../vue/dist/vue.js"></script>
+    <script src="../vue/node_modules/vuex/dist/vuex.js"></script>
+    <script>
+        Vue.use(Vuex)
+        const store = new Vuex.Store({
+            state:{
+                data:[],
+                count:0
+            },
+            getters:{
+                // 需要根据state派生一些其它数据
+                dataLen: state=>{
+                    return state.data.length
+                },
+                getLen2:(state, getters)=>{
+                    return state.data.length
+                }
+            },
+            mutations:{
+                increment(state, actionArg){
+                    console.log('先于mutation订阅',actionArg)
+                    state.count++
+                }
+            },
+            actions:{
+                doIncrement(context){
+                    // console.log(context) 当前store实例，由于有多层module的缘故，所以这个不一定指向根store
+                    console.log('再触发实际的action操作：actioned')
+                    context.commit('increment','from action arg')
+                }
+            }
+        })
+        var app = new Vue({
+            el:"#app",
+            store,
+            mounted(){
+                this.$store.subscribe((mutation, state)=>{
+                    debugger
+                    console.log('mutation却是等到实际的mutation后，才触发订阅的mutaion',mutation)
+                })
+                this.$store.subscribeAction((act, state)=>{
+                    console.log('先触发subcation的订阅',act)
+                })
+                setTimeout(()=>{
+                    this.$store.dispatch("doIncrement",'payloadArg')
+                },2000)
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>

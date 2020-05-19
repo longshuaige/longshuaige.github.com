@@ -15,7 +15,7 @@ function Vue (options) {
 }
 
 initMixin(Vue) //  给Vue的原型上添加了一个方法：_init
-stateMixin(Vue)
+stateMixin(Vue) // $watch $set $delete
 eventsMixin(Vue)
 lifecycleMixin(Vue)
 renderMixin(Vue)

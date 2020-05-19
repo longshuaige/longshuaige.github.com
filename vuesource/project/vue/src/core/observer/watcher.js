@@ -99,11 +99,11 @@ export default class Watcher {
    * Evaluate the getter, and re-collect dependencies.
    */
   get () {
-    pushTarget(this)
+    pushTarget(this) //    pushTarget  Dep.target 有了值，即watcher, new Watcher 的时候，该值都会改变
     let value
     const vm = this.vm
     try {
-      value = this.getter.call(vm, vm)
+      value = this.getter.call(vm, vm) // 因为会去获取模板中有的变量，所以会触发getter
     } catch (e) {
       if (this.user) {
         handleError(e, vm, `getter for watcher "${this.expression}"`)

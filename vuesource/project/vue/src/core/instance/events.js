@@ -83,6 +83,7 @@ export function eventsMixin (Vue: Class<Component>) {
     const vm: Component = this
     // all
     if (!arguments.length) {
+      // 没有传递任何参数，直接全部清除所有绑定的事件
       vm._events = Object.create(null)
       return vm
     }
@@ -99,6 +100,7 @@ export function eventsMixin (Vue: Class<Component>) {
       return vm
     }
     if (!fn) {
+      // 没有指定解除哪个回调函数， 所以全部解除
       vm._events[event] = null
       return vm
     }
@@ -106,6 +108,7 @@ export function eventsMixin (Vue: Class<Component>) {
     let cb
     let i = cbs.length
     while (i--) {
+      // 只解除指定的回调函数
       cb = cbs[i]
       if (cb === fn || cb.fn === fn) {
         cbs.splice(i, 1)

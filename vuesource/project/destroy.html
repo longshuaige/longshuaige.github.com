@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>destroy {{age}}</h2>
+        </div>
+    </div>
+    <script src="vue/dist/vue.js"></script>
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            beforeCreate(){
+            },
+            data(){
+                return {
+                    age:14
+                }
+            },
+            created(){
+
+            },
+
+            beforeMount(){
+            },
+            beforeUpdate(){
+            },
+            mounted(){
+                setTimeout((arg)=>{
+                    console.log(arg)
+                    this.$destroy()
+                    this.age = 16
+                },2000,'arg123, destroy并不会立马清除已经渲染的dom，但是后续数据更新却不会影响到dom')
+            }
+        })
+    </script>
+</body>
+</html>

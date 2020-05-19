@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>parent</h2>
+            <child-eve @test="test"></child-eve>
+        </div>
+    </div>
+    <script src="vue/dist/vue.js"></script>
+    <script>
+        // Vue.mixin({
+        //     beforeCreate(){
+        //         console.log("mixin beforeCreate")
+        //     }
+        // })
+        Vue.component("ChildEve",{
+            name:"ChildEve",
+            data(){
+                return {
+                    obj:{x:1}
+                }
+            },
+            template:`
+                <h3>child</h3>
+            `,
+            mounted(){
+                this.$on("from_parent",()=>{
+                    console.log("receive parent")
+                })
+                this.$emit("test")
+            }
+        })
+        var app = new Vue({
+            el: '#app',
+            beforeCreate(){
+            },
+            data(){
+                return {
+                    age:14
+                }
+            },
+            created(){
+
+            },
+            methods:{
+                test(){
+                    console.log("gg")
+                }
+            },
+            beforeMount(){
+            },
+            beforeUpdate(){
+            },
+            mounted(){
+            }
+        })
+    </script>
+</body>
+</html>

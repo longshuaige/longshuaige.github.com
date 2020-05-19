@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="../vue/dist/vue.js"></script>
+    <script src="../vue/node_modules/vuex/dist/vuex.js"></script>
+    <script>
+        Vue.use(Vuex)
+        const store = new Vuex.Store({
+            modules:{
+                a:{
+                    namespaced: true,
+                    modules:{
+                        x:{
+                            namespaced: true,
+                            state:{
+                                am:"th am module"
+                            },
+                            getters:{
+                                thr(state){
+                                    return 'thr ' + state.am
+                                }
+                            }
+                        },
+                        y:{
+                            state:{
+                                am:"th a y m module"
+                            },
+                            getters:{
+                                thr2(state){
+                                    return 'thr ' + state.am
+                                }
+                            },
+                            modules:{
+                                yy:{
+                                    state:{
+                                        am:"th am module"
+                                    },
+                                    getters:{
+                                        thr22(state){
+                                            return 'thr22 yy' + state.am
+                                        }
+                                    },
+                                }
+                            }
+                        }
+                    },
+                    state:{
+                        am: "amodule"
+                    },
+                    getters:{
+                        sec(state){
+                            return 'sec '+state.am
+                        }
+                    }
+                }
+            },
+            state:{
+                data:[],
+                count:0
+            },
+            getters:{
+                // 需要根据state派生一些其它数据
+                dataLen: state=>{
+                    return state.data.length
+                },
+                getLen2:(state, getters)=>{
+                    return state.data.length
+                }
+            },
+            mutations:{
+                increment(state){
+                    state.count++
+                }
+            }
+        })
+        var app = new Vue({
+            el:"#app",
+            store,
+            mounted(){
+                console.log(this.$store)
+                console.log(this.$store.getters.getLen2)
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>

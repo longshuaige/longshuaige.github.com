@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>parent</h2>
+            <child-eve v-model="childVal"></child-eve>
+            <div>childVal:{{childVal}}</div>
+        </div>
+    </div>
+    <script src="vue/dist/vue.js"></script>
+    <script>
+        Vue.component("ChildEve",{
+            name:"ChildEve",
+            model: {
+                prop: 'prop1',
+                // event: 'event1' // 如果没有指定，则使用名为 ’input‘ 的事件
+            },
+            data(){
+                return {
+                    obj:{x:1},
+                    iptVal:''
+                }
+            },
+            template:`
+                <div>
+                    <input type="text" v-model="iptVal" @keyup="chg"/>
+                </div>
+                
+            `,
+            methods:{
+                chg(){
+                    console.log(this.iptVal, this.prop, this.prop1)
+                    this.$emit("input", this.iptVal)
+                }
+            },
+            mounted(){
+                console.log(this.prop)
+            }
+        })
+        var app = new Vue({
+            el: '#app',
+            beforeCreate(){
+            },
+            data(){
+                return {
+                    childVal: '',
+                    age:14
+                }
+            },
+            created(){
+
+            },
+            methods:{
+                test(){
+                    console.log("gg")
+                }
+            },
+            beforeMount(){
+            },
+            beforeUpdate(){
+            },
+            mounted(){
+            }
+        })
+    </script>
+</body>
+</html>
