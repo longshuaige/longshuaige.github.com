@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	let p1 = new Promise(function(resolve,reject){
+		setTimeout(()=>{
+			resolve("33")
+		})
+	})
+	let p = p1.then(res=>{
+	    console.log(1);
+	    // then 里面有微任务，先执行微任务，但是异步任务却不一样
+	    queueMicrotask(()=>{
+	        console.log(2)
+	        Promise.resolve("").then(()=>{
+	            console.log(4)
+	        })
+	    })
+	    queueMicrotask(()=>{
+	        console.log(5)
+	        Promise.resolve("").then(()=>{
+	            console.log(6)
+	        })
+	    })
+	    return 'end'
+	 })
+	 p.then(res=>{
+	     console.log(3)
+	 })
+</script>
+</body>
+</html>

@@ -306,7 +306,7 @@ function resetStoreVM (store, state, hot) {
   Vue.config.silent = true
   store._vm = new Vue({
     data: {
-      $$state: state
+      $$state: state // 因为state是一个对象类型的，所以在new Vue的过程中，会将state添加__ob__属性，从而变成响应式的
     },
     computed
   })

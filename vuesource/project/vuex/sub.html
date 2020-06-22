@@ -35,7 +35,9 @@
                 doIncrement(context){
                     // console.log(context) 当前store实例，由于有多层module的缘故，所以这个不一定指向根store
                     console.log('再触发实际的action操作：actioned')
-                    context.commit('increment','from action arg')
+                    setTimeout(() => {
+                        context.commit('increment','from action arg')
+                    }, 300);
                 }
             }
         })
@@ -44,11 +46,15 @@
             store,
             mounted(){
                 this.$store.subscribe((mutation, state)=>{
-                    debugger
                     console.log('mutation却是等到实际的mutation后，才触发订阅的mutaion',mutation)
                 })
-                this.$store.subscribeAction((act, state)=>{
-                    console.log('先触发subcation的订阅',act)
+                this.$store.subscribeAction({
+                    before(act, state){
+                        console.log('before 非before、after时，先触发subcation的订阅', act)
+                    },
+                    after(act, state){
+                        console.log('after 非before、after时，先触发subcation的订阅', act)
+                    }
                 })
                 setTimeout(()=>{
                     this.$store.dispatch("doIncrement",'payloadArg')

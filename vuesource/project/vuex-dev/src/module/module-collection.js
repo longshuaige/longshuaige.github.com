@@ -9,6 +9,7 @@ export default class ModuleCollection {
 
   get (path) {
     return path.reduce((module, key) => {
+      // 迭代 path [a,b,c]; 当path为空即返回this.root
       return module.getChild(key)
     }, this.root)
   }
@@ -43,6 +44,7 @@ export default class ModuleCollection {
     if (rawModule.modules) {
       //-- 即 options里的modules
       forEachValue(rawModule.modules, (rawChildModule, key) => {
+        // 递归子module, 
         this.register(path.concat(key), rawChildModule, runtime)
       })
     }

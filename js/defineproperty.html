@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	let obj = {}
+	var secVal
+	Object.defineProperty(obj,'sec',{
+		get(v){
+			console.log("get s")
+			return secVal
+		},
+		set(v){
+			console.log("set s")
+			secVal = v;
+		}
+	})
+	obj.sec = {}
+	var thrVal
+	Object.defineProperty(obj.sec,'thr',{
+		get(){
+			console.log("get t")
+			return thrVal
+		},
+		set(v){
+			console.log("set t")
+			thrVal = v
+		}	
+	})
+	obj.sec.thr = {}
+
+	var four
+	Object.defineProperty(obj.sec.thr,'four',{
+		get(){
+			console.log("get four")
+			return four
+		},
+		set(v){
+			console.log("set four")
+			four = v
+		}	
+	})
+</script>
+</body>
+</html>

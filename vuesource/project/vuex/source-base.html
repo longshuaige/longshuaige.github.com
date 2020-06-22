@@ -6,7 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="app">{{x.d}}</div>
+    <div id="app">
+        <h3>{{x.d}}</h3>
+        <div class="child">
+            <child-comp></child-comp>
+        </div>
+    </div>
     <script src="../vue/dist/vue.js"></script>
     <script src="../vuex-dev/dist/vuex.js"></script>
     <script>
@@ -33,6 +38,14 @@
                 }
             }
         })
+        Vue.component("childComp",{
+            template:`<div>{{y}}</div>`,
+            data(){
+                return {
+                    y:1
+                }
+            }
+        })
         var app = new Vue({
             el: "#app",
             store,
@@ -42,6 +55,7 @@
                 }
             },
             mounted() {
+                console.log(this.$store)
                 setTimeout(() => {
                     this.x={d:123}
                 }, 500);
